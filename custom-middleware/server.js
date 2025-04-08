@@ -1,4 +1,5 @@
 import express from "express";
+import { StatusCodes } from "http-status-codes";
 
 const app = express();
 
@@ -27,15 +28,19 @@ const passRequestPostBodyAsJSONArray = (req, res, next) => {
         req.body = jsonBody;
         next();
       } else {
-        res.status(400).send("Body must be an array of strings");
+        res
+          .status(StatusCodes.BAD_REQUEST)
+          .send("Body must be an array of strings");
       }
     } catch (e) {
-      res.status(400).send("Invalid JSON format");
+      res.status(StatusCodes.BAD_REQUEST).send("Invalid JSON format");
     }
   });
 
   req.on("error", () => {
-    res.status(500).send("Error processing request");
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send("Error processing request");
   });
 };
 
@@ -53,7 +58,7 @@ app.post("/", (req, res) => {
       ? `You have requested information about ${subjectsLength} ${
           subjectsLength > 1 ? "subjects" : "subject"
         }: ${req.body}`
-      : "You have requested about 0 subjects";
+      : "You have requested information about 0 subjects";
 
   res.send(`${authMessage}\n\n${infoMsg}`);
 });
