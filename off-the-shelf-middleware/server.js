@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 const app = express();
 
-const authenticate = (req, res, next) => {
+const authenticate = (req, _, next) => {
   if (req.headers["x-username"]) {
     req.username = req.headers["x-username"];
   } else {
@@ -13,37 +13,25 @@ const authenticate = (req, res, next) => {
 };
 
 const passRequestPostBodyAsJSONArray = (req, res, next) => {
-  let body = "";
-  req.on("data", (chunk) => {
-    body += chunk;
-  });
-
-  req.on("end", () => {
-    try {
-      const jsonBody = JSON.parse(body);
-      if (
-        Array.isArray(jsonBody) &&
-        jsonBody.every((item) => typeof item === "string")
-      ) {
-        req.body = jsonBody;
-        next();
-      } else {
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .send("Body must be an array of strings");
-      }
-    } catch (e) {
-      res.status(StatusCodes.BAD_REQUEST).send("Invalid JSON format");
+  try {
+    if (
+      Array.isArray(req.body) &&
+      req.body.every((item) => typeof item === "string")
+    ) {
+      next();
+    } else {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .send("Body must be an array of strings");
     }
-  });
-
-  req.on("error", () => {
+  } catch (e) {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send("Error processing request");
-  });
+      .send("Something went wrong. Please try again later.");
+  }
 };
 
+app.use(express.json());
 app.use(authenticate);
 app.use(passRequestPostBodyAsJSONArray);
 
