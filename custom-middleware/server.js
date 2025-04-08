@@ -5,7 +5,6 @@ const app = express();
 const authenticate = (req, res, next) => {
   if (req.headers["x-username"]) {
     req.username = req.headers["x-username"];
-    console.log(req.headers);
   } else {
     req.username = null;
   }
@@ -56,7 +55,6 @@ app.post("/", (req, res) => {
         }: ${req.body}`
       : "You have requested about 0 subjects";
 
-  console.log(`${authMessage}\n\n${infoMsg}`);
   res.send(`${authMessage}\n\n${infoMsg}`);
 });
 
