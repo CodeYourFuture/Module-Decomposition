@@ -5,7 +5,7 @@ const app = express();
 const authenticate = (req, res, next) => {
   if (req.headers["x-username"]) {
     req.username = req.headers["x-username"];
-    console.log(req.headers)
+    console.log(req.headers);
   } else {
     req.username = null;
   }
@@ -45,7 +45,18 @@ app.use(passRequestPostBodyAsJSONArray);
 
 app.post("/", (req, res) => {
   const { username } = req;
-  username ? res.send(`You are authenticated as ${username}`): res.send('You are not authenticated')
+  const authMessage = username
+    ? res.send(`You are authenticated as ${username}`)
+    : res.send("You are not authenticated");
+  const subjectsLength = req.body.length;
+  const infoMsg =
+    subjectsLength > 0
+      ? `You have requested information about ${subjectsLength} ${
+          subjectsLength > 1 ? "subjects" : "subject"
+        }: ${req.body}`
+      : "You have requested about 0 subjects";
+
+  console.log(infoMsg);
 });
 
 app.listen(3000, () => console.log("Server is listening at port 3000..."));
