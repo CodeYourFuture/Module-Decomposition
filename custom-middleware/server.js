@@ -57,7 +57,7 @@ app.post("/", (req, res) => {
     subjectsLength > 0
       ? `You have requested information about ${subjectsLength} ${
           subjectsLength > 1 ? "subjects" : "subject"
-        }: ${req.body}`
+        }: ${req.body.join(", ")}`
       : "You have requested information about 0 subjects";
 
   res.send(`${authMessage}\n\n${infoMsg}`);
