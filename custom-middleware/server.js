@@ -45,8 +45,7 @@ app.use(passRequestPostBodyAsJSONArray);
 
 app.post("/", (req, res) => {
   const { username } = req;
-  res.send(username)
-  console.log(username, "username==>");
+  username ? res.send(`You are authenticated as ${username}`): res.send('You are not authenticated')
 });
 
 app.listen(3000, () => console.log("Server is listening at port 3000..."));
