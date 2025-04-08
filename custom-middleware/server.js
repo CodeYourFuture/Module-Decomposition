@@ -46,8 +46,8 @@ app.use(passRequestPostBodyAsJSONArray);
 app.post("/", (req, res) => {
   const { username } = req;
   const authMessage = username
-    ? res.send(`You are authenticated as ${username}`)
-    : res.send("You are not authenticated");
+    ? `You are authenticated as ${username}`
+    : "You are not authenticated";
   const subjectsLength = req.body.length;
   const infoMsg =
     subjectsLength > 0
@@ -56,7 +56,8 @@ app.post("/", (req, res) => {
         }: ${req.body}`
       : "You have requested about 0 subjects";
 
-  console.log(infoMsg);
+  console.log(`${authMessage}\n\n${infoMsg}`);
+  res.send(`${authMessage}\n\n${infoMsg}`);
 });
 
 app.listen(3000, () => console.log("Server is listening at port 3000..."));
