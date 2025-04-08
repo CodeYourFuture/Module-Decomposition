@@ -38,3 +38,6 @@ const passRequestPostBodyAsJSONArray = (req, res, next) => {
     res.status(500).send("Error processing request");
   });
 };
+
+app.use(authenticate);
+app.use(passRequestPostBodyAsJSONArray);
