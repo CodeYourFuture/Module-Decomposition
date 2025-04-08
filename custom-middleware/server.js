@@ -3,8 +3,9 @@ import express from "express";
 const app = express();
 
 const authenticate = (req, res, next) => {
-  if (req.headers["X-Username"]) {
-    req.username = req.headers["X-Username"];
+  if (req.headers["x-username"]) {
+    req.username = req.headers["x-username"];
+    console.log(req.headers)
   } else {
     req.username = null;
   }
@@ -41,3 +42,11 @@ const passRequestPostBodyAsJSONArray = (req, res, next) => {
 
 app.use(authenticate);
 app.use(passRequestPostBodyAsJSONArray);
+
+app.post("/", (req, res) => {
+  const { username } = req;
+  res.send(username)
+  console.log(username, "username==>");
+});
+
+app.listen(3000, () => console.log("Server is listening at port 3000..."));
