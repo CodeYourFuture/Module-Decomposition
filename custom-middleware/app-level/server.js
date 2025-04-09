@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 const app = express();
 
-const authenticate = (req, res, next) => {
+const authenticateUser = (req, res, next) => {
   if (req.headers["x-username"]) {
     req.username = req.headers["x-username"];
   } else {
@@ -44,7 +44,7 @@ const passRequestPostBodyAsJSONArray = (req, res, next) => {
   });
 };
 
-app.use(authenticate);
+app.use(authenticateUser);
 app.use(passRequestPostBodyAsJSONArray);
 
 app.post("/", (req, res) => {
