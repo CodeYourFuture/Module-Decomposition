@@ -2,6 +2,7 @@ import express from "express";
 import { StatusCodes } from "http-status-codes";
 
 const app = express();
+const router = express.Router();
 
 const authenticate = (req, _, next) => {
   if (req.headers["x-username"]) {
@@ -31,11 +32,7 @@ const passRequestPostBodyAsJSONArray = (req, res, next) => {
   }
 };
 
-app.use(express.json());
-app.use(authenticate);
-app.use(passRequestPostBodyAsJSONArray);
-
-app.post("/", (req, res) => {
+const postData = (req, res) => {
   const { username } = req;
   const authMessage = username
     ? `You are authenticated as ${username}`
@@ -48,7 +45,14 @@ app.post("/", (req, res) => {
         }: ${req.body.join(", ")}`
       : "You have requested information about 0 subjects";
 
+  app.use(express.json());
+  router.use(authenticate);
+  router.use(passRequestPostBodyAsJSONArray);
   res.send(`${authMessage}\n\n${infoMsg}`);
-});
+};
+
+router.post("/", postData);
+
+app.use(router);
 
 app.listen(3000, () => console.log("Server is listening at port 3000..."));
