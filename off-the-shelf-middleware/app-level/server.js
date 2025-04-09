@@ -31,12 +31,7 @@ const passRequestPostBodyAsJSONArray = (req, res, next) => {
   }
 };
 
-app.use(express.json());
-app.use(authenticate);
-app.use(passRequestPostBodyAsJSONArray);
-
-app.post("/", (req, res) => {
-  console.log(req.body);
+const postData = (req, res) => {
   const { username } = req;
   const authMessage = username
     ? `You are authenticated as ${username}`
@@ -50,6 +45,13 @@ app.post("/", (req, res) => {
       : "You have requested information about 0 subjects";
 
   res.send(`${authMessage}\n\n${infoMsg}`);
-});
+};
+
+// middleware
+app.use(express.json());
+app.use(authenticate);
+app.use(passRequestPostBodyAsJSONArray);
+
+app.post("/", postData);
 
 app.listen(3000, () => console.log("Server is listening at port 3000..."));
