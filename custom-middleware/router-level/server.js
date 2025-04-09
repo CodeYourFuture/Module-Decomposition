@@ -61,9 +61,7 @@ const postData = (req, res) => {
   res.send(`${authMessage}\n\n${infoMsg}`);
 };
 
-router.use(authenticate);
-router.use(passRequestPostBodyAsJSONArray);
-router.post("/", postData);
+router.post("/", [authenticate, passRequestPostBodyAsJSONArray], postData);
 
 app.use(router);
 
