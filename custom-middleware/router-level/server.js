@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 const app = express();
 const router = express.Router();
 
-const authenticate = (req, res, next) => {
+const authenticateUser = (req, res, next) => {
   if (req.headers["x-username"]) {
     req.username = req.headers["x-username"];
   } else {
@@ -61,7 +61,7 @@ const postData = (req, res) => {
   res.send(`${authMessage}\n\n${infoMsg}`);
 };
 
-router.post("/", [authenticate, passRequestPostBodyAsJSONArray], postData);
+router.post("/", [authenticateUser, passRequestPostBodyAsJSONArray], postData);
 
 app.use(router);
 
