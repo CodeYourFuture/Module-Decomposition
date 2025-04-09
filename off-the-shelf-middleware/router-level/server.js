@@ -45,13 +45,12 @@ const postData = (req, res) => {
         }: ${req.body.join(", ")}`
       : "You have requested information about 0 subjects";
 
-  app.use(express.json());
-  router.use(authenticate);
-  router.use(passRequestPostBodyAsJSONArray);
   res.send(`${authMessage}\n\n${infoMsg}`);
 };
 
-router.post("/", postData);
+// middleware
+app.use(express.json());
+router.post("/", [authenticate, passRequestPostBodyAsJSONArray], postData);
 
 app.use(router);
 
