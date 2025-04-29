@@ -24,7 +24,7 @@ def second(value):
 
 print(double("22")) # will print 2222
 
-def double(number):
+def triple(number):
     return number * 3
 
-print(double(10))
+print(triple(10))
