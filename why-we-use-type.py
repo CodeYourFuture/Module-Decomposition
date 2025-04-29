@@ -23,3 +23,8 @@ def second(value):
 # print(second("22"))
 
 print(double("22")) # will print 2222
+
+def double(number):
+    return number * 3
+
+print(double(10))
