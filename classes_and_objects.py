@@ -15,3 +15,8 @@ print(imran.is_adult())
 eliza = Person("Eliza", 34, "Arch Linux")
 print(eliza.name)
 # print(eliza.address)# address is not an attribute of the Person class
+
+def get_address(person: Person) -> str:
+     return person.address
+
+print(get_address(imran))
