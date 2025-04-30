@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Tuple
 import tabulate
 
 class OperatingSystem(Enum):
@@ -23,8 +22,8 @@ class Laptop:
     screen_size_in_inches: float
     operating_system: OperatingSystem
 
-def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[Person, Tuple[Laptop, int]]:
-    allocation: dict[Person, Tuple[Laptop, int]] = {}
+def allocate_laptops(people: list[Person], laptops: list[Laptop]) -> dict[Person, tuple[Laptop, int]]:
+    allocation: dict[Person, tuple[Laptop, int]] = {}
     unallocated_laptops = laptops[:]
     
     def calculate_sadness(person: Person, laptop: Laptop) -> int:
