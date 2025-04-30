@@ -52,4 +52,22 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[Person
         raise ValueError("Not enough laptops to allocate one to each person.")
     
     return allocation
+
+
+
+
+people = [
+        Person(name="Daniel", age=34, preferred_operating_system=(OperatingSystem.UBUNTU, OperatingSystem.MACOS, OperatingSystem.ARCH)),
+        Person(name="Maryam", age=36, preferred_operating_system=(OperatingSystem.MACOS, OperatingSystem.UBUNTU, OperatingSystem.ARCH)),
+        Person(name="Saliou", age=36, preferred_operating_system=(OperatingSystem.MACOS, OperatingSystem.UBUNTU, OperatingSystem.UBUNTU)),
+    ]
+
+laptops = [
+        Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system=OperatingSystem.ARCH),
+        Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.ARCH),
+        Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
+        Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
+    ]
+    
+
     
