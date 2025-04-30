@@ -25,5 +25,31 @@ class Laptop:
     operating_system: OperatingSystem
 
 
-def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
+def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[Person, Laptop]:
+    allocation: dict[Person, Laptop] = {}
+    unallocated_laptops = laptops[:]
+    
+    def calculate_sadness(person: Person, laptop: Laptop) -> int:
+        if laptop.operating_system in person.preferred_operating_system:
+            return person.preferred_operating_system.index(laptop.operating_system)
+        return 100  # Sadness of 100 if the OS is not in the preferred list
+
+    for person in people:
+        best_laptop = None
+        min_sadness = float('inf')
+        
+        for laptop in unallocated_laptops:
+            sadness = calculate_sadness(person, laptop)
+            if sadness < min_sadness:
+                min_sadness = sadness
+                best_laptop = laptop
+        
+        if best_laptop:
+            allocation[person] = laptop
+            unallocated_laptops.remove(best_laptop)
+    
+    if len(allocation) != len(people):
+        raise ValueError("Not enough laptops to allocate one to each person.")
+    
+    return allocation
     
