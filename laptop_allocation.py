@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List
-from typing import Dict
+from typing import List, Tuple
+import tabulate
 
 class OperatingSystem(Enum):
     MACOS = "macOS"
@@ -13,8 +13,7 @@ class Person:
     name: str
     age: int
     # Sorted in order of preference, most preferred is first.
-    preferred_operating_system: List[OperatingSystem]
-
+    preferred_operating_system: tuple[OperatingSystem, ...]
 
 @dataclass(frozen=True)
 class Laptop:
@@ -24,9 +23,8 @@ class Laptop:
     screen_size_in_inches: float
     operating_system: OperatingSystem
 
-
-def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[Person, Laptop]:
-    allocation: dict[Person, Laptop] = {}
+def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[Person, Tuple[Laptop, int]]:
+    allocation: dict[Person, Tuple[Laptop, int]] = {}
     unallocated_laptops = laptops[:]
     
     def calculate_sadness(person: Person, laptop: Laptop) -> int:
@@ -45,7 +43,7 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[Person
                 best_laptop = laptop
         
         if best_laptop:
-            allocation[person] = laptop
+            allocation[person] = (best_laptop, min_sadness)
             unallocated_laptops.remove(best_laptop)
     
     if len(allocation) != len(people):
@@ -53,13 +51,10 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> dict[Person
     
     return allocation
 
-
-
-
 people = [
         Person(name="Daniel", age=34, preferred_operating_system=(OperatingSystem.UBUNTU, OperatingSystem.MACOS, OperatingSystem.ARCH)),
         Person(name="Maryam", age=36, preferred_operating_system=(OperatingSystem.MACOS, OperatingSystem.UBUNTU, OperatingSystem.ARCH)),
-        Person(name="Saliou", age=36, preferred_operating_system=(OperatingSystem.MACOS, OperatingSystem.UBUNTU, OperatingSystem.UBUNTU)),
+        Person(name="Saliou", age=36, preferred_operating_system=(OperatingSystem.MACOS, OperatingSystem.UBUNTU, OperatingSystem.ARCH)),
     ]
 
 laptops = [
@@ -68,6 +63,10 @@ laptops = [
         Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system=OperatingSystem.UBUNTU),
         Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system=OperatingSystem.MACOS),
     ]
-    
 
-    
+allocation = allocate_laptops(people, laptops)
+allocation_rows = [
+    (person.name, laptop.manufacturer, laptop.model, laptop.operating_system.value, sadness)
+    for person, (laptop, sadness) in allocation.items()
+]
+print(tabulate.tabulate(allocation_rows, headers=["Person", "Manufacturer", "Model", "Operating System", "Sadness"], tablefmt="pretty"))
