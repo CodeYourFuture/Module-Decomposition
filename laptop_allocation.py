@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 from typing import List
+from typing import Dict
 
 class OperatingSystem(Enum):
     MACOS = "macOS"
@@ -22,3 +23,7 @@ class Laptop:
     model: str
     screen_size_in_inches: float
     operating_system: OperatingSystem
+
+
+def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
+    
