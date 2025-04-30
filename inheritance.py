@@ -31,7 +31,7 @@ print(person1.get_full_name())
 
 person2 = Parent("Elizaveta", "Alekseeva")
 print(person2.get_name())
-print(person2.get_full_name()) # will thrown an error since get_full_name does not exist in parent class
-person2.change_last_name("Tyurina") # will thrown an error since change_last_name method does not exist in parent class
+# print(person2.get_full_name()) # will thrown an error since get_full_name does not exist in parent class
+# person2.change_last_name("Tyurina") # will thrown an error since change_last_name method does not exist in parent class
 print(person2.get_name())
-print(person2.get_full_name()) # will thrown an error since get_full_name does not exist in parent class
+# print(person2.get_full_name()) # will thrown an error since get_full_name does not exist in parent class
