@@ -1,23 +1,23 @@
+# Import date class from the datetime module
+from datetime import date
 class Person:
-    def __init__(self, name: str, age: int, preferred_operating_system: str):
-        self.name = name
-        self.age = age
+    # a constructor to construct a new  instance of the class
+    def __init__(self, name: str, date_of_birth: date, preferred_operating_system: str):
+        self.name = name        
+        self.date_of_birth = date_of_birth
         self.preferred_operating_system = preferred_operating_system
+    # is_adult method 
+    def is_adult(self) -> bool:
+        today = date.today()
+        date_birth = self.date_of_birth
+        age = today.year - date_birth.year - ((today.month, today.day) < (date_birth.month, date_birth.day))
+        return age >= 18
 
-imran = Person("Imran", 22, "Ubuntu")
+imran = Person("Imran", date(1997, 7, 10), "Ubuntu")
 print(imran.name)
-# print(imran.address)
+print(imran.is_adult())
 
-eliza = Person("Eliza", 34, "Arch Linux")
+eliza = Person("Eliza", date(1993, 9, 11), "Arch Linux")
 print(eliza.name)
-# print(eliza.address)
+print(eliza.is_adult())
 
-def is_adult(person: Person) -> bool:
-    return person.age >= 18
-
-print(is_adult(imran))
-
-def get_surname(person: Person) -> str:
-    return person.surname
-
-print(get_surname(eliza))
