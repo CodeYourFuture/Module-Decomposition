@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { StatusCodes } from "http-status-codes";
 
 const app = express();
@@ -48,6 +49,7 @@ const postData = (req, res) => {
 };
 
 // middleware
+app.use(cors());
 app.use(express.json());
 app.use(authenticate);
 app.use(passRequestPostBodyAsJSONArray);
