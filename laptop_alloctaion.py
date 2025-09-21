@@ -105,9 +105,14 @@ def allocate_laptops(
                     laptops_copy.remove(laptop)
                     sadness += index
                     break
-                elif laptop.operating_system != person.preferred_operating_system[
-                    index
-                ] and index + 1 == len(person.preferred_operating_system):
-                    sadness += 100
+        # If after distribution person still doesn't have a laptop, give him the first we can find
+        if person not in allocation:
+            allocation[person] = laptops[0]
+            sadness += 100
 
     return allocation
+
+
+allocation = allocate_laptops(users, laptops)
+print("\n".join(f"{key} :\n {value}" for key, value in allocation.items()))
+print(sadness)
