@@ -16,6 +16,9 @@ class Person:
     # Sorted in order of preference, most preferred is first.
     preferred_operating_system: List[OperatingSystem]
 
+    def __hash__(self):
+        return hash((self.name, self.age, tuple(self.preferred_operating_system)))
+
 
 @dataclass(frozen=True)
 class Laptop:
@@ -56,18 +59,55 @@ laptops = [
         operating_system=OperatingSystem.MACOS,
     ),
 ]
+users = [
+    Person(
+        name="Andrei",
+        age=20,
+        preferred_operating_system=[OperatingSystem.MACOS, OperatingSystem.UBUNTU],
+    ),
+    Person(
+        name="Eyuel",
+        age=20,
+        preferred_operating_system=[
+            OperatingSystem.MACOS,
+            OperatingSystem.UBUNTU,
+            OperatingSystem.ARCH,
+        ],
+    ),
+    Person(
+        name="Priscilla",
+        age=30,
+        preferred_operating_system=[OperatingSystem.ARCH, OperatingSystem.UBUNTU],
+    ),
+    Person(
+        name="Miki",
+        age=21,
+        preferred_operating_system=[OperatingSystem.MACOS, OperatingSystem.UBUNTU],
+    ),
+]
+
+sadness = 0
 
 
 def allocate_laptops(
     people: List[Person], laptops: List[Laptop]
 ) -> dict[Person, Laptop]:
     allocation = {}
+    global sadness
     laptops_copy = laptops.copy()
     for person in people:
-        for laptop in laptops_copy:
-            for index in range(len(person.preferred_operating_system)):
-                if laptop.operating_system == person.preferred_operating_system:
+        for index in range(len(person.preferred_operating_system)):
+            if person in allocation:
+                break
+            for laptop in laptops_copy:
+                if laptop.operating_system == person.preferred_operating_system[index]:
                     allocation[person] = laptop
-                # elif
+                    laptops_copy.remove(laptop)
+                    sadness += index
+                    break
+                elif laptop.operating_system != person.preferred_operating_system[
+                    index
+                ] and index + 1 == len(person.preferred_operating_system):
+                    sadness += 100
 
     return allocation
