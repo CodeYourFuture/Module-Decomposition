@@ -1,29 +1,27 @@
+from datetime import date
+
+
 class Person:
-    def __init__(self, name: str, age: int, preferred_operating_system: str):
+    # a constructor with a new instance of class
+    def __init__(self, name: str, date_of_birth:date, preferred_operating_system: str):
         self.name = name
-        self.age = age
+        self.date_of_birth = date_of_birth
         self.preferred_operating_system = preferred_operating_system
 
-imran = Person("Imran", 22, "Ubuntu")
+    def is_adult(self):
+        today_date = date.today()
+        birth_date= self.date_of_birth
+        #to check date and month as well
+        age = today_date.year-birth_date.year- ((today_date.month, today_date.day) < (birth_date.month, birth_date.day)) 
+        return age>=18
+
+
+imran = Person("Imran", date(1989,6,25), "Ubuntu")
 print(imran.name)
-#when try to run this code says person don't have address attribute
-#need to comment out to run code
-#print(imran.address)
+print(imran.is_adult())
 
-eliza = Person("Eliza", 34, "Arch Linux")
-print(eliza.name)
-#when try to run this code says person don't have address attribute 
-#need to commentout to run code
-#print(eliza.address)
+eliza = Person("Eliza", date(2007,10,12), "Arch Linux")
+print(eliza.is_adult())
 
 
-def is_adult(person: Person) -> bool:
-    return person.age >= 18
 
-print(is_adult(imran))
-
-#  error: "Person" has no attribute "surname"
-def get_surname(person: Person) -> str:
-    return person.surname
-
-print(get_surname(eliza))
