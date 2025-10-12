@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List, Tuple
 from enum import Enum
 import sys
 from collections import Counter
@@ -62,7 +61,7 @@ laptops = [
 users = []
 
 
-def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]:
+def find_possible_laptops(laptops: list[Laptop], person: Person) -> list[Laptop]:
     possible_laptops = []
     for laptop in laptops:
         if laptop.operating_system == person.preferred_operating_system:
@@ -70,7 +69,7 @@ def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]
     return possible_laptops
 
 
-def input_validation() -> Tuple[str, int, OperatingSystem]:
+def input_validation() -> tuple[str, int, OperatingSystem]:
     input_user_name = input("Enter your name: ")
     if not isinstance(input_user_name, str):
         sys.stderr.write("Name must be a string")
@@ -95,19 +94,19 @@ def input_validation() -> Tuple[str, int, OperatingSystem]:
     return input_user_name, input_user_age, preferred_os
 
 
-def count_operating_systems(laptops: List[Laptop]) -> Counter[OperatingSystem]:
+def count_operating_systems(laptops: list[Laptop]) -> Counter[OperatingSystem]:
     return Counter(laptop.operating_system for laptop in laptops)
 
 
-def recommend_os(user: Person, laptops: List[Laptop]) -> None:
+def recommend_os(user: Person, laptops: list[Laptop]) -> None:
     os_counts = count_operating_systems(laptops)
     most_common_os, most_common_count = os_counts.most_common(1)[0]
 
-    user_count = os_counts[user.preferred_operating_system]
+    user_preferred_os = os_counts[user.preferred_operating_system]
 
     if (
         most_common_os != user.preferred_operating_system
-        and user_count < most_common_count
+        and user_preferred_os < most_common_count
     ):
         print(f"More laptops are available with {most_common_os.value}.")
 
