@@ -20,15 +20,13 @@ const parseJSON = (req, res, next) => {
       return;
     }
     if (
-      typeof body != "object" ||
+      !Array.isArray(body) ||
       body.some((element) => typeof element !== "string")
     ) {
       console.error(
         `Failed to extract text of the message from post body: ${bodyString}`
       );
-      res
-        .status(400)
-        .send("Expected body to be a JSON object containing key message.");
+      res.status(400).send("Expected body to be an JSON array of strings.\n");
       return;
     }
     req.body = body;
