@@ -9,10 +9,6 @@ const assignHeader = (req, res, next) => {
 app.use(assignHeader);
 app.use(express.json());
 
-// add `-H 'Content-Type: application/json'` to curl request
-//curl -X POST --data '["Bees"]' -H 'Content-Type: application/json'  -H "X-Username: Ahmed" http://localhost:3000
-// this will match Content-Type header with the type option.
-
 app.post("/", (req, res) => {
   let message = [];
   if (req.username) {
