@@ -17,7 +17,7 @@ class Laptop:
 
 def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]:
     # create a set of lowercase preferred names for faster membership checks
-    prefs_lower = {os.lower() for os in person.preferred_operating_systems}
+    prefs_lower = {os.lower() for os in person.preferred_operating_systems} #turn the string in to lowercase and it stores is on our set called prefs_lower
     possible_laptops: List[Laptop] = []
     for laptop in laptops:
         if laptop.operating_system.lower() in prefs_lower:
@@ -39,3 +39,5 @@ laptops = [
 for person in people:
     possible_laptops = find_possible_laptops(laptops, person)
     print(f"Possible laptops for {person.name}: {possible_laptops}")
+# now ubuntu and Ubuntu is the same match
+# by basically checking if the lower case version of our text is there we declare it is the same thing 
