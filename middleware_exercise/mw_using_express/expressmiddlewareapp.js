@@ -8,4 +8,33 @@ function userNameMiddleware(req, res, next) {
     next(); //to pass control onward
 }
 
-//my second middleware jsonarray middleware
+//my second middleware json array middleware.. manually parsing raw body into json
+function jsonArrayMiddleware(req, res, next) {
+    let data = '';
+    
+    //collecting the chunk of data as soon as they arrive
+    req.on("data", chunk => {
+        data += chunk;
+    });
+    
+    req.on("end", () => {
+      try {
+        const parsed = JSON.parse(data);
+
+        //checking if it is an array
+        if (!Array.isArray(parsed)) {
+          return res.status(400).send("Request body must be a JSON array.");
+        }
+        // check every item is a string
+        const allStrings = parsed.every((item) => typeof item === "string");
+        if (!allStrings) {
+          return res.status(400).send("All array elements must be strings.");
+        }
+
+        req.body = parsed;
+        next();
+      } catch (err) {
+        res.status(400).send("Invalid JSON.");
+      }
+    });
+}
