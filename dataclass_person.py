@@ -7,7 +7,7 @@ class Person:
     date_of_birth: date
     preferred_operating_system: str
 
-def is_adult(self):
+    def is_adult(self):
         today = date.today()
         birth_date= self.date_of_birth
         #Calculate exact age by subtracting years
