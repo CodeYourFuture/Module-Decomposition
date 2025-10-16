@@ -1,7 +1,8 @@
 //create the app using express
 const express = require("express");
 const app = express();
-//my fiirst middleware , request/get the header and attach it to req
+//my first middleware , request/get the header and attach it to req
+
 function userNameMiddleware(req, res, next) {
     const username = req.header("X-Username");  
     req.username = username ? username : null;
@@ -40,7 +41,7 @@ function jsonArrayMiddleware(req, res, next) {
 }
 
 //my route handler
-app.post("/", usernameMiddleware, jsonArrayMiddleware, (req, res) => {
+app.post("/", userNameMiddleware, jsonArrayMiddleware, (req, res) => {
   const username = req.username;
   const subjects = req.body;
   const count = subjects.length;
