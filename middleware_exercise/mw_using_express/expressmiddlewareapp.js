@@ -67,3 +67,11 @@ app.post("/", usernameMiddleware, jsonArrayMiddleware, (req, res) => {
 
   res.send(response);
 });
+
+//start the server
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
+});
+
+//to run node app.js
+//on other terminal  curl -X POST --data '["Bees"]' -H "X-Username: Ahmed" http://localhost:3000
