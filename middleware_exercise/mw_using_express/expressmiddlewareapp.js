@@ -38,3 +38,32 @@ function jsonArrayMiddleware(req, res, next) {
       }
     });
 }
+
+//my route handler
+app.post("/", usernameMiddleware, jsonArrayMiddleware, (req, res) => {
+  const username = req.username;
+  const subjects = req.body;
+  const count = subjects.length;
+
+  let response = "";
+
+  // Auth message
+  if (username) {
+    response += `You are authenticated as ${username}.\n\n`;
+  } else {
+    response += "You are not authenticated.\n\n";
+  }
+
+  // Subject count message
+  if (count === 1) {
+    response += `You have requested information about 1 subject: ${subjects[0]}.`;
+  } else if (count > 1) {
+    response += `You have requested information about ${count} subjects: ${subjects.join(
+      ", "
+    )}.`;
+  } else {
+    response += "You have requested information about 0 subjects.";
+  }
+
+  res.send(response);
+});
