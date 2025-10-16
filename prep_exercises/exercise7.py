@@ -1,12 +1,10 @@
 from dataclasses import dataclass
 from typing import List
-
 @dataclass(frozen=True)
 class Person:
     name: str
     age: int
-    preferred_operating_system: str
-
+    preferred_operating_systems: List[str]
 
 @dataclass(frozen=True)
 class Laptop:
@@ -18,16 +16,17 @@ class Laptop:
 
 
 def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]:
-    possible_laptops = []
+    # create a set of lowercase preferred names for faster membership checks
+    prefs_lower = {os.lower() for os in person.preferred_operating_systems}
+    possible_laptops: List[Laptop] = []
     for laptop in laptops:
-        if laptop.operating_system == person.preferred_operating_system:
+        if laptop.operating_system.lower() in prefs_lower:
             possible_laptops.append(laptop)
     return possible_laptops
 
-
 people = [
-    Person(name="Imran", age=22, preferred_operating_system="Ubuntu"),
-    Person(name="Eliza", age=34, preferred_operating_system="Arch Linux"),
+    Person(name="Imran", age=22, preferred_operating_systems=["Ubuntu", "Arch Linux"]),
+    Person(name="Eliza", age=34, preferred_operating_systems=["Arch Linux"]),
 ]
 
 laptops = [
