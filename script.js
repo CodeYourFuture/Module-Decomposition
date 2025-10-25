@@ -3,7 +3,6 @@ const app = express();
 
 app.use(express.json());
 
-
 function usernameExtractor(req, res, next) {
   const username = req.get("X-Username");
   req.username = username ? username : null;
@@ -25,13 +24,10 @@ app.post("/", usernameExtractor,(req, res) => {
       .send("Error: Array must contain only string elements.");
   }
 
-  let response = "";
 
-  if (username) {
-    response += `You are authenticated as ${username}.`;
-  } else {
-    response += `You are not authenticated.`;
-  }
+  let response = username
+    ? `You are authenticated as ${username}.\n`
+    : `You are not authenticated.\n`;
 
   const count = subjects.length;
   const subjectArr = subjects.join(", ");
