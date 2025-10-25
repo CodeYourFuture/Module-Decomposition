@@ -1,6 +1,8 @@
 import express from "express"
 const app = express();
-const port = 3000;
+
+app.use(express.json());
+
 
 function usernameExtractor(req, res, next) {
   const username = req.get("X-Username");
@@ -41,4 +43,9 @@ app.post("/", usernameExtractor,(req, res) => {
   }
 
   res.send(response);
+});
+
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
