@@ -25,7 +25,20 @@ app.post("/", usernameExtractor,(req, res) => {
 
   let response = "";
 
+  if (username) {
+    response += `You are authenticated as ${username}.`;
+  } else {
+    response += `You are not authenticated.`;
+  }
 
+  const count = subjects.length;
+  const subjectArr = subjects.join(", ");
+  if (count === 0) {
+    response += "You have requested information about 0 subject.";
+  } else {
+    const plural = count > 1 ? "subjects" : "subject";
+    response += `You have requested information about ${count} ${plural}: ${subjectArr}.`;
+  }
 
   res.send(response);
 });
