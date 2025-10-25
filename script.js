@@ -16,6 +16,15 @@ app.post("/", usernameExtractor,(req, res) => {
         return res.status(400).send("Error: Body must be a JSON array.");
     }
 
+    const CheckAllStrings = subjects.every((e) => typeof e === "string");
+  if (!CheckAllStrings) {
+    return res
+      .status(400)
+      .send("Error: Array must contain only string elements.");
+  }
+
+  let response = "";
+
 
 
   res.send(response);
