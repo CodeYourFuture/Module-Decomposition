@@ -44,33 +44,41 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
     if len(people) != len(laptops):
         raise ValueError("Number of people must equal number of laptops")
     
-    # Greedy approach: Sort people by how limited their good options are
-    # Then allocate their best available choice
     allocation: Dict[Person, Laptop] = {}
-    available_laptops = list(laptops)
+    available_laptops = set(laptops)  # Use set for O(1) lookup and removal
     
-    # Create a priority queue of (person, laptop, sadness) tuples
-    # Sort by sadness to allocate best matches first
-    preferences = []
-    for person in people:
+    # Helper to find best available laptop for a person
+    def find_best_available(person: Person) -> tuple[Laptop, int] | None:
+        """Returns (best_laptop, sadness) or None if no laptops available."""
+        best_laptop = None
+        best_sadness = float('inf')
+        
         for laptop in available_laptops:
             sadness = calculate_sadness(person, laptop)
-            preferences.append((sadness, person, laptop))
+            if sadness < best_sadness:
+                best_sadness = sadness
+                best_laptop = laptop
+                # Early exit if we found a perfect match (sadness 0)
+                if sadness == 0:
+                    break
+        
+        return (best_laptop, best_sadness) if best_laptop else None
     
-    preferences.sort(key=lambda x: x[0])
+    # Sort people by how limited their good options are
+    # (by counting how many laptops match their preferences - less matches = higher priority)
+    def count_good_matches(person: Person) -> int:
+        """Count how many laptops have sadness < 100 (i.e., OS is in their preferences)."""
+        return sum(1 for laptop in laptops if calculate_sadness(person, laptop) < 100)
     
-    # Greedy allocation: try to give everyone their best available choice
-    allocated_people = []
-    allocated_laptops = []
+    sorted_people = sorted(people, key=count_good_matches)
     
-    for sadness, person, laptop in preferences:
-        if person not in allocated_people and laptop not in allocated_laptops:
+    # Greedy allocation: for each person, find their best available laptop
+    for person in sorted_people:
+        result = find_best_available(person)
+        if result:
+            laptop, _ = result
             allocation[person] = laptop
-            allocated_people.append(person)
-            allocated_laptops.append(laptop)
-            
-            if len(allocation) == len(people):
-                break
+            available_laptops.remove(laptop)  # O(1) removal
     
     return allocation
 
@@ -96,9 +104,11 @@ laptops = [
 allocation = allocate_laptops(people, laptops)
 
 print("Laptop Allocation:")
+total_sadness = 0
 for person, laptop in allocation.items():
     sadness = calculate_sadness(person, laptop)
+    total_sadness += sadness
     print(f"{person.name} -> {laptop.manufacturer} {laptop.model} ({laptop.operating_system.value}) - Sadness: {sadness}")
 
-print(f"\nTotal Sadness: {calculate_total_sadness(allocation)}")
+print(f"\nTotal Sadness: {total_sadness}")
 
