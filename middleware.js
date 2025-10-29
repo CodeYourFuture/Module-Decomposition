@@ -12,11 +12,11 @@ const usernameValidator = (req, res, next) => {
 
   const userInfo = `You are authenticated as ${username}`;
 
-  console.log('req.body =', req.body); // debug
+  console.log('req.body =', req.body);
 
   let userMessage = 'No subjects requested';
   if (Array.isArray(req.body) && req.body.length > 0) {
-    info.push(...req.body); // push items first
+    info.push(...req.body); 
     userMessage = `You have requested information about ${req.body.length} subjects: ${req.body.join(', ')}`;
   }
 
@@ -33,7 +33,7 @@ const usernameValidator = (req, res, next) => {
 app.use(usernameValidator);
 
 app.post('/', (req, res) => {
-  const username = req.headers['x-username']; // use lowercase key
+  const username = req.headers['x-username']; 
   res.send(`Username is ${username}, Subjects: ${JSON.stringify(info)}`);
 });
 
