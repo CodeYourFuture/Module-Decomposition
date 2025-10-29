@@ -22,8 +22,7 @@ print(double("hello"))
 print(second("hello"))
 print(second("22"))
 
-# The bug: this function is called double but multiplies by 3!
 def double_bug(number):
-    return number * 3
+    return number * 2
 
-print(double_bug(10))  # Should return 20 but returns 30
+print(double_bug(10))  # Returns 20 (correctly doubles the number)
