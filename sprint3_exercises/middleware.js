@@ -10,41 +10,28 @@ function extractUsername(req, res, next) {
   next();
 }
 
-// Middleware 2: Parse POST body as JSON array of strings
-function parseJsonArrayBody(req, res, next) {
-  let bodyString = "";
+// Middleware 2: Parse POST body as JSON (reusable for any JSON parsing)
+app.use(express.json());
 
-  req.on("data", (chunk) => {
-    bodyString += chunk;
-  });
+// Middleware 3: Validate that body is an array of strings
+function validateArrayOfStrings(req, res, next) {
+  // Check if it's an array
+  if (!Array.isArray(req.body)) {
+    return res.status(400).send("Request body must be a JSON array");
+  }
 
-  req.on("end", () => {
-    try {
-      const parsed = JSON.parse(bodyString);
+  // Check if all elements are strings
+  const allStrings = req.body.every((item) => typeof item === "string");
+  if (!allStrings) {
+    return res.status(400).send("All array elements must be strings");
+  }
 
-      // Check if it's an array
-      if (!Array.isArray(parsed)) {
-        return res.status(400).send("Request body must be a JSON array");
-      }
-
-      // Check if all elements are strings
-      const allStrings = parsed.every((item) => typeof item === "string");
-      if (!allStrings) {
-        return res.status(400).send("All array elements must be strings");
-      }
-
-      req.body = parsed;
-      next();
-    } catch (error) {
-      console.error("Failed to parse JSON:", error);
-      res.status(400).send("Invalid JSON");
-    }
-  });
+  next();
 }
 
 // Apply middlewares
 app.use(extractUsername);
-app.post("/", parseJsonArrayBody, (req, res) => {
+app.post("/", validateArrayOfStrings, (req, res) => {
   const authMessage = req.username
     ? `You are authenticated as ${req.username}.`
     : "You are not authenticated.";
