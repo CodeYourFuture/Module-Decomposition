@@ -1,5 +1,5 @@
-def double(n): 
+def triple(n): 
     return n * 3
 
-num = double(21)
+num = triple(21)
 print(num)
