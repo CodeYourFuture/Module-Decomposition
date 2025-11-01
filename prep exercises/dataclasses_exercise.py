@@ -12,9 +12,12 @@ class Person:
         birth_date = date.fromisoformat(self.date_of_birth)
         age = today_date.year - birth_date.year
 
+        if (today_date.month, today_date.day) < (birth_date.month, birth_date.day):
+            age -= 1
+
         return age >= 18
 
 
-imran = Person("Imran", "2019-10-18", "Ubuntu")
+imran = Person("Imran", "2007-11-02", "Ubuntu")
 
 print(imran.is_adult())
