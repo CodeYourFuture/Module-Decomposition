@@ -11,8 +11,8 @@ function usernameExtractor(req, res, next) {
   next();
 }
 
-// Parses body as JSON array and validates string elements
-function jsonArrayValidator(req, res, next) {
+// Parses raw request body as JSON
+function jsonBodyParser(req, res, next) {
   let data = "";
 
   req.on("data", (chunk) => {
@@ -22,31 +22,35 @@ function jsonArrayValidator(req, res, next) {
   req.on("end", () => {
     try {
       const parsed = JSON.parse(data); // try to parse JSON
-
-      if (!Array.isArray(parsed)) {
-        return res.status(400).send("Error: Body must be a JSON array.");
-      }
-
-      const allStrings = parsed.every((item) => typeof item === "string");
-      if (!allStrings) {
-        return res
-          .status(400)
-          .send("Error: Array must contain only string elements.");
-      }
-
-      req.body = parsed; // save valid array
-      next(); 
+      req.body = parsed; // attach parsed object to req
+      next();
     } catch (err) {
       res.status(400).send("Error: Invalid JSON.");
     }
   });
 }
 
+// Validates that req.body is a string array
+function stringArrayValidator(req, res, next) {
+  if (!Array.isArray(req.body)) {
+    return res.status(400).send("Error: Body must be a JSON array.");
+  }
+
+  const allStrings = req.body.every((item) => typeof item === "string");
+  if (!allStrings) {
+    return res
+      .status(400)
+      .send("Error: Array must contain only string elements.");
+  }
+
+  next();
+}
+
 // Applies the first middleware to all routes
 app.use(usernameExtractor);
 
 // Handles POST requests and builds response message
-app.post("/", jsonArrayValidator, (req, res) => {
+app.post("/", jsonBodyParser, stringArrayValidator, (req, res) => {
   const username = req.username;
   const subjects = req.body;
 
