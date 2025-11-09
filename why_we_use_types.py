@@ -27,6 +27,7 @@ def double1(number):
 
 print(double1(10))   
 # When you check the function name, it doesn’t fit what we have to expect.
+# A better name would be 'triple' or 'multiply_by_three'.
 # If you use this func you would expect it to give you double like 20, not 30.
 # It might cause a problem for your code.
 
