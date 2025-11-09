@@ -51,6 +51,10 @@ def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person
       if sadness < best_sadness:
         best_sadness = sadness
         best_laptop = laptop
+      
+      # If sadness is 0, it means this is the perfect match, no need to check further
+      if sadness == 0:
+        break
 
     # assign and remove from pool
     if best_laptop:
