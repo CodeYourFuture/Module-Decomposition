@@ -12,7 +12,9 @@ console.log("Quote element:", quoteText);
 showQuoteButton.addEventListener("click", async () => {
   try {
     // Send a GET request to the backend server
-    const response = await fetch("http://localhost:3000/");
+    const response = await fetch(
+      "https://sheidashab-quoteserver.hosting.codeyourfuture.io"
+    );
 
     // Read the response body as plain text
     const quote = await response.text();
