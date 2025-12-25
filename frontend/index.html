@@ -1,57 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Quote</title>
     <style>
-        body {
-            font-family: Tahoma, sans-serif;
-            margin: 20px;
-            background-color: #f0f0f0;
-        }
-        #quotes {
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 8px;
-            min-height: 100px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 400px;
-        }
-        input[type="text"] {
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-        button {
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
+      body {
+        font-family: Tahoma, sans-serif;
+        margin: 20px;
+        background-color: #f0f0f0;
+      }
+
+      #quotes {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 8px;
+        min-height: 100px;
+      }
+
+      /* Form */
+      form {
+        display: flex;
+        flex-direction: column;
+
+        /*increase form width */
+        max-width: 600px; /* bigger max width */
+        width: 90%; /* responsive width */
+        margin: 20px auto; /* center form */
+        padding: 15px; /* internal padding */
+        background-color: #fff; /* white background */
+        border-radius: 8px; /* rounded corners */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* subtle shadow */
+      }
+
+      /* style for form heading */
+      form h2 {
+        margin-bottom: 15px; /* space below heading */
+        font-size: 1.4rem; /* slightly bigger font */
+        color: #007bff; /* blue color matching button */
+        text-align: center; /* center text */
+        font-weight: bold; /* bold font */
+      }
+
+      /* Inputs */
+      input[type="text"] {
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+
+        /* make input full width */
+        width: 100%;
+      }
+
+      /* Button */
+      button {
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+
+        /* CHANGED: make button full width */
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Quotes</h1>
     <div id="quotes">
-     <button type="button" id="showQuoteBtn">Show random Quote</button>
-     <p id="quoteText"></p>
+      <button type="button" id="showQuoteBtn">
+        Click to show random Quotes
+      </button>
+      <p id="quoteText"></p>
     </div>
-    
+
     <form id="quoteform">
-        <input type="text" id="newquote" placeholder="Insert new quote : " required>
-        <button type="submit">insert</button>
+      <h2>Insert a New Quote</h2>
+      <input
+        type="text"
+        id="newquote"
+        placeholder="Insert new quote : "
+        required
+      />
+      <input
+        type="text"
+        id="newquoteAuthor"
+        placeholder="Insert author : "
+        required
+      />
+      <button type="submit">insert</button>
     </form>
     <script src="script.js"></script>
-   </body>
+  </body>
 </html>
