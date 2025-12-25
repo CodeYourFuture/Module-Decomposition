@@ -1,0 +1,17 @@
+{
+  "name": "module-decomposition",
+  "version": "1.0.0",
+  "description": "Exercises to practice and solidify your understanding of the Decomposition module of the Software Development Course.",
+  "main": "quoteServer.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  }
+}
