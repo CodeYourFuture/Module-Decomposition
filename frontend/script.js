@@ -34,7 +34,7 @@ quoteInsertForm.addEventListener("submit", async (event) => {
 
   const data = { quote, author };
 
-  const response = await fetch("http://localhost:3000/", {
+  const response = await fetch("https://sheidashab-quoteserver.hosting.codeyourfuture.io", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
