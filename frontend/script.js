@@ -9,13 +9,20 @@ console.log("Quote element:", quoteText);
 
 // Add a click event listener to the button
 showQuoteButton.addEventListener("click", async () => {
+  try{
+    // Send a GET request to the backend server
+    const response = await fetch("http://localhost:3000/");
 
-  // Send a GET request to the backend server
-  const response = await fetch("http://localhost:3000/");
+    // Read the response body as plain text
+    const quote = await response.text();
 
-  // Read the response body as plain text
-  const quote = await response.text();
-
-  // Display the quote inside the paragraph
-  quoteText.textContent = quote;
+    // Display the quote inside the paragraph
+    quoteText.textContent = quote;
+  }catch(error){
+    // If something goes wrong (server down, CORS, network error)
+    console.log(error);
+    quoteText.textContent = "Failed to load quote.";
+  }
+  
+  
 });
