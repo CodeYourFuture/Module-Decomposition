@@ -47,3 +47,7 @@ print(person2.get_name())
 #  File "/Users/Module-Decomposition/prep_exercises/exercise9inheritance.py", line 34, in <module>
 #    print(person2.get_full_name())
 #AttributeError: 'Parent' object has no attribute 'get_full_name'
+
+#This error on the last line means since there is no method called get_full_name in Parent class(it is only defined in child),
+#python rises the attribute error on parent  and inheritance works downward so the child can have what the parent have but not the reverse.
+#and hence get_full_name is only for the child and it can not be inherited to the parenet.
