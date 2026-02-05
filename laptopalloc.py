@@ -1,7 +1,8 @@
 #import Python tools for structured data (dataclass), enumerations (Enum), and type hints (List, Dict)
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Dict, Tuple
+from typing import List, Dict
+
 #Define a fixed set of operating systems as an enum to avoid typos and enforce valid values
 class OperatingSystem(Enum):
     MACOS = "macOS"
@@ -25,36 +26,32 @@ class Laptop:
 
 #Main function to assign exactly one laptop per person while minimizing “sadness”
 def allocate_laptops(people: List[Person], laptops: List[Laptop]) -> Dict[Person, Laptop]:
-    sadness_list: List[Tuple[int, Person, Laptop]] = []
-    #Compute sadness for each laptop for each person (0 = best match, 100 = not preferred)
-    for person in people:
-        for laptop in laptops:
-            if laptop.operating_system in person.preferred_operating_system:
-                sadness = person.preferred_operating_system.index(laptop.operating_system)
-            else:
-                sadness = 100
-            sadness_list.append((sadness, person, laptop))
-
-# Sort by sadness (lowest first)
-    sadness_list.sort(key=lambda x: x[0])
-#Track assigned laptops and people to ensure uniqueness
-    allocations: Dict[Person, Laptop] = {}
+    allocations: Dict[Person, Laptop] = {}  # store which laptop each person gets
     allocated_laptops = set()
+    for person in people:
+        # Try preferred operating systems in order
+        for preferred_os in person.preferred_operating_system:
+            # find the first unallocated laptop with this OS
+            laptop = next(
+                (l for l in laptops if l.operating_system == preferred_os and l.id not in allocated_laptops),
+                None
+            )
+            if laptop:
+                allocations[person] = laptop
+                allocated_laptops.add(laptop.id)
+                break  # stop checking once a laptop is assigned
 
-#Greedily allocate laptops to minimise sadness
-    for sadness, person, laptop in sadness_list:
-        if person not in allocations and laptop.id not in allocated_laptops:
-            allocations[person] = laptop
-            allocated_laptops.add(laptop.id)
+        # Fallback: if no preferred OS laptop is available, assign any remaining laptop
+        if person not in allocations:
+            for laptop in laptops:
+                if laptop.id not in allocated_laptops:
+                    allocations[person] = laptop
+                    allocated_laptops.add(laptop.id)
+                    break
 
     return allocations
 
 
-
-
-
-
-#example usage
 people = [
     Person("Imran", 22, (OperatingSystem.UBUNTU, OperatingSystem.ARCH, OperatingSystem.MACOS)),
     Person("Eliza", 34, (OperatingSystem.ARCH, OperatingSystem.UBUNTU)),
