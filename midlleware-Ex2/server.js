@@ -4,6 +4,7 @@ const app = express();
 app.use(express.json()); //built in JSON parser
 const PORT = 3000;
 
+
 function usernameMiddleware(req, res, next) {
   const headerValue = req.header("X-Username"); // Express helper for headers
   req.username = headerValue ? headerValue : null;
