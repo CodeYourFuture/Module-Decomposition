@@ -13,8 +13,6 @@ const usernameMiddleware = (req,res,next) => {
 
 // middleware for body parsing and validation
 
-app.use(express.text({ type: 'application/json'}));
-
 const validateArrayMiddleware = (req, res, next) => {
     // express.json() did the parsing, so..
     const data = req.body;
