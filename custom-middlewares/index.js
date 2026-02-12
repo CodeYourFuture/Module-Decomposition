@@ -5,12 +5,6 @@ function usernameMiddleware(request, response, next) {
   next();
 }
 
-
-
-
-
-
-
 const express = require("express");
 
 const app = express();
@@ -21,9 +15,9 @@ app.use(usernameMiddleware);
 
 app.post("/", (request, response) => {
   if (request.username) {
-    request.send(`You are authenticated as ${req.username}.`);
+    response.send(`You are authenticated as ${request.username}.`);
   } else {
-    request.send("You are not authenticated.");
+    response.send("You are not authenticated.");
   }
 });
 
