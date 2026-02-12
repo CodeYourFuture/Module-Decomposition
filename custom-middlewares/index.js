@@ -2,7 +2,7 @@
 function usernameMiddleware(request, response, next) {
   const usernameHeader = request.header("X-Username");
   request.username = usernameHeader ? usernameHeader : null;
-
+  next();
 }
 
 
