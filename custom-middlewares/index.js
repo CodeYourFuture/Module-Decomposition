@@ -16,7 +16,9 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
-// temporary route – no middleware yet
+app.use(usernameMiddleware);
+
+
 app.post("/", (req, res) => {
   res.send("App is running");
 });
