@@ -19,8 +19,12 @@ const PORT = 3000;
 app.use(usernameMiddleware);
 
 
-app.post("/", (req, res) => {
-  res.send("App is running");
+app.post("/", (request, response) => {
+  if (request.username) {
+    request.send(`You are authenticated as ${req.username}.`);
+  } else {
+    request.send("You are not authenticated.");
+  }
 });
 
 app.listen(PORT, () => {
