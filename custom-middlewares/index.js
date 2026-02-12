@@ -1,3 +1,16 @@
+// Middleware 1 looks for a header with name "X-Username"
+function usernameMiddleware(request, response, next) {
+  const usernameHeader = request.header("X-Username");
+  request.username = usernameHeader ? usernameHeader : null;
+
+}
+
+
+
+
+
+
+
 const express = require("express");
 
 const app = express();
