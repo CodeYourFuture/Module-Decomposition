@@ -41,21 +41,23 @@ app.use(postBodyAsJsonMiddleware);
 
 
 app.post("/", (request, response) => {
+  let responseToClient1;
   if (request.username) {
-    response.send(`You are authenticated as ${request.username}.`);
+    responseToClient1 = `You are authenticated as ${request.username}.`;
   } else {
-    response.send("You are not authenticated.");
+    responseToClient1 = "You are not authenticated.";
   }
-
 
   const subjects = request.body || [];
-  let responseToClient;
+  let responseToClient2;
 
   if (subjects.length === 0) {
-    responseToClient = "You have requested information about 0 subjects.";
+    responseToClient2 = "You have requested information about 0 subjects.";
   } else {
-    responseToClient = `You have requested information about ${subjects.length} subject${subjects.length > 1 ? 's' : ''}: ${subjects.join(', ')}.`;
+    responseToClient2 = `You have requested information about ${subjects.length} subject${subjects.length > 1 ? 's' : ''}: ${subjects.join(', ')}.`;
   }
+
+  response.send(`${responseToClient1}\n${responseToClient2}`);
 });
 
 app.listen(PORT, () => {
