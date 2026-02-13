@@ -6,12 +6,11 @@ function usernameMiddleware(request, response, next) {
 }
 
 const express = require("express");
-
 const app = express();
 const PORT = 3000;
 
 app.use(usernameMiddleware);
-app.use(express.json());
+app.use(express.json()); // Add the built-in JSON parser middleware
 
 
 app.post("/", (request, response) => {
