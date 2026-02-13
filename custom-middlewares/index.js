@@ -46,6 +46,16 @@ app.post("/", (request, response) => {
   } else {
     response.send("You are not authenticated.");
   }
+
+
+  const subjects = request.body || [];
+  let responseToClient;
+
+  if (subjects.length === 0) {
+    responseToClient = "You have requested information about 0 subjects.";
+  } else {
+    responseToClient = `You have requested information about ${subjects.length} subject${subjects.length > 1 ? 's' : ''}: ${subjects.join(', ')}.`;
+  }
 });
 
 app.listen(PORT, () => {
