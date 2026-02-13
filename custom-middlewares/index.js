@@ -5,6 +5,32 @@ function usernameMiddleware(request, response, next) {
   next();
 }
 
+// Middleware 2 parse the POST body as JSON array
+function postBodyAsJsonMiddleware(request, response, next) {
+  let data = '';
+
+  request.on('data', chunk => {
+    data += chunk;
+  });
+
+  request.on('end', () => {
+    try {
+      const parsedData = JSON.parse(data);
+
+      if (!Array.isArray(parsedData) || !parsedData.every(item => typeof item === 'string')) {
+        return response.status(400).send('Invalid request: must be a JSON array of strings')
+      }
+
+      request.body = parsedData;
+      next();
+    } catch (err) {
+      response.status(400).send("Invalid JSON");
+    }
+  });
+}
+
+
+
 const express = require("express");
 
 const app = express();
