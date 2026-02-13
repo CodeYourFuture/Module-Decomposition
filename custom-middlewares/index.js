@@ -37,6 +37,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(usernameMiddleware);
+app.use(postBodyAsJsonMiddleware);
 
 
 app.post("/", (request, response) => {
