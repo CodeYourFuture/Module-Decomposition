@@ -14,14 +14,23 @@ app.use(express.json()); // Add the built-in JSON parser middleware
 
 
 app.post("/", (request, response) => {
-  let responseToClient;
+  let responseToClient1;
   if (request.username) {
-    responseToClient = `You are authenticated as ${request.username}.`;
+    responseToClient1 = `You are authenticated as ${request.username}.`;
   } else {
-    responseToClient = "You are not authenticated.";
+    responseToClient1 = "You are not authenticated.";
   }
 
-  response.send(`${responseToClient}`);
+  const subjects = request.body || [];
+  let responseToClient2;
+
+  if (subjects.length === 0) {
+    responseToClient2 = "You have requested information about 0 subjects.";
+  } else {
+    responseToClient2 = `You have requested information about ${subjects.length} subject${subjects.length > 1 ? 's' : ''}: ${subjects.join(', ')}.`;
+  }
+
+  response.send(`${responseToClient1}` + "\n" + `${responseToClient2}`);
 });
 
 app.listen(PORT, () => {
