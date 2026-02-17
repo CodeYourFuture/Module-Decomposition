@@ -37,10 +37,10 @@ const app = express();
 const PORT = 3000;
 
 app.use(usernameMiddleware);
-app.use(postBodyAsJsonMiddleware);
 
 
-app.post("/", (request, response) => {
+
+app.post("/", postBodyAsJsonMiddleware, (request, response) => {
   let responseToClient1;
   if (request.username) {
     responseToClient1 = `You are authenticated as ${request.username}.`;
