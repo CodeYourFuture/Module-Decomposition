@@ -1,14 +1,15 @@
 
 function parseJsonArrayBody(req, res, next) {
-  let data = "";
+  let data = [];
 
   req.on("data", (chunk) => {
-    data += chunk;
+    data.push(chunk);
   });
 
   req.on("end", () => {
     try {
-      const parsed = JSON.parse(data);
+      const str = Buffer.concat(data).toString('utf8');
+      const parsed = JSON.parse(str);
 
       if (!Array.isArray(parsed)) {
         return res.status(400).send("Body must be array");
