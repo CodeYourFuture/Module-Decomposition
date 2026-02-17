@@ -11,6 +11,9 @@ describe("POST /subjects", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.text).toContain("You are authenticated as Ahmed.");
+    expect(response.text).toContain(
+      "You have requested information about 2 subjects: Birds, Bats."
+    );
   });
 
   test("responds with not authenticated when header missing", async () => {
@@ -20,6 +23,9 @@ describe("POST /subjects", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.text).toContain("You are not authenticated.");
+    expect(response.text).toContain(
+      "You have requested information about 1 subject: Bees."
+    );
   });
 
   test("rejects non-array body", async () => {
@@ -36,6 +42,17 @@ describe("POST /subjects", () => {
       .send([1, 2, 3]);
 
     expect(response.statusCode).toBe(400);
+  });
+
+  test("responds with empty subjects message", async () => {
+    const response = await request(app)
+      .post("/subjects")
+      .send([]);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.text).toContain(
+      "You have requested information about 0 subjects."
+    );
   });
 
 });
