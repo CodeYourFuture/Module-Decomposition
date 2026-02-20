@@ -1,0 +1,43 @@
+from dataclasses import dataclass
+from typing import List
+@dataclass(frozen=True)
+class Person:
+    name: str
+    age: int
+    preferred_operating_systems: List[str]
+
+@dataclass(frozen=True)
+class Laptop:
+    id: int
+    manufacturer: str
+    model: str
+    screen_size_in_inches: float
+    operating_system: str
+
+
+def find_possible_laptops(laptops: List[Laptop], person: Person) -> List[Laptop]:
+    # create a set of lowercase preferred names for faster membership checks
+    prefs_lower = {os.lower() for os in person.preferred_operating_systems} #turn the string in to lowercase and it stores is on our set called prefs_lower
+    possible_laptops: List[Laptop] = []
+    for laptop in laptops:
+        if laptop.operating_system.lower() in prefs_lower:
+            possible_laptops.append(laptop)
+    return possible_laptops
+
+people = [
+    Person(name="Imran", age=22, preferred_operating_systems=["Ubuntu", "Arch Linux"]),
+    Person(name="Eliza", age=34, preferred_operating_systems=["Arch Linux"]),
+]
+
+laptops = [
+    Laptop(id=1, manufacturer="Dell", model="XPS", screen_size_in_inches=13, operating_system="Arch Linux"),
+    Laptop(id=2, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system="Ubuntu"),
+    Laptop(id=3, manufacturer="Dell", model="XPS", screen_size_in_inches=15, operating_system="ubuntu"),
+    Laptop(id=4, manufacturer="Apple", model="macBook", screen_size_in_inches=13, operating_system="macOS"),
+]
+
+for person in people:
+    possible_laptops = find_possible_laptops(laptops, person)
+    print(f"Possible laptops for {person.name}: {possible_laptops}")
+# now ubuntu and Ubuntu is the same match
+# by basically checking if the lower case version of our text is there we declare it is the same thing 
