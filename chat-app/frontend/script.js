@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "http://q90a6zb4cssxee1pud5tasjh.178.105.39.91.sslip.io";
 
 const messageForm = document.querySelector("#message-form");
 const nameInput = document.querySelector("#name-input");
