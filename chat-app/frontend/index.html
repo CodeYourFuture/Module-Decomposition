@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+    <main class="app">
+        <section class="chat-panel">
+            <header class="chat-header">
+                <h1>Chat App</h1>
+                <p>Send messages and see messages from other users.</p>
+            </header>
+
+            <form id="message-form" class="message-form">
+                <label for="name-input">Name</label>
+                <input id="name-input" name="name" type="text" required />
+
+                <label for="message-input">Message</label>
+                <textarea id="message-input" name="message" rows="3" required></textarea>
+
+                <button type="submit">Send message</button>
+                <p id="form-status" class="form-status"></p>
+            </form>
+
+            <section class="messages-section">
+                <div class="messages-header">
+                    <h2>Messages</h2>
+                    <button type="button" id="refresh-button">Refresh</button>
+                </div>
+
+                <ul id="messages-list" class="messages-list"></ul>
+            </section>
+        </section>
+    </main>
+</body>
+
+</html>
