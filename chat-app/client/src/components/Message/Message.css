@@ -1,0 +1,31 @@
+.message {
+  border-radius: 8px;
+  border: 1px solid #777;
+  padding: 1em;
+  margin-bottom: 0.5em;
+}
+
+.message-text,
+.message-info {
+  margin: 0;
+}
+
+.message-text {
+  font-size: large;
+}
+
+.message-info {
+  font-size: small;
+  display: flex;
+  justify-content: space-around;
+}
+
+.message-like {
+  display: flex;
+}
+
+.like-button {
+  border: none;
+  background-color: #fff;
+  font-size: 1.5rem;
+}
