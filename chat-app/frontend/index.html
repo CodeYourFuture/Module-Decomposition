@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Chat</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="script.mjs" defer></script>
+</head>
+
+<body>
+    <div class="chat">
+        <header>
+            <h1>💬 Chat</h1>
+            <span id="connection-status">Connecting...</span>
+        </header>
+
+        <!-- Messages -->
+        <main id="messages"></main>
+
+        <!-- Reply preview -->
+        <div id="reply-preview" class="reply-preview hidden">
+            <div>
+                <strong>Replying to:</strong>
+                <span id="reply-text"></span>
+            </div>
+            <button id="cancel-reply" type="button">✕</button>
+        </div>
+
+        <!-- Message controls -->
+        <div class="toolbar">
+            <button type="button" id="bold-button" title="Bold">
+                <strong>B</strong>
+            </button>
+            <button type="button" id="italic-button" title="Italic">
+                <em>I</em>
+            </button>
+            <button type="button" id="underline-button" title="Underline">
+                <u>U</u>
+            </button>
+
+            <label for="colour" title="Message colour">🎨</label>
+            <input id="colour" type="color" value="#000000" />
+
+            <label for="schedule">🕐</label>
+            <input id="schedule" type="datetime-local" />
+        </div>
+
+        <!-- Message form -->
+        <form id="message-form">
+            <input id="username" type="text" placeholder="Your name" required />
+            <input id="message-input" type="text" placeholder="Write a message..." required />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+
+</html>
