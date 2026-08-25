@@ -1,5 +1,5 @@
 // WebSocket connection
-const socket = new WebSocket("ws://localhost:8080");
+const socket = new WebSocket("wss://l9q3oftszwtuusrnoonm7gud.trainees.hosting.cyf.academy");
 
 // HTML elements
 const messagesContainer = document.querySelector("#messages");
