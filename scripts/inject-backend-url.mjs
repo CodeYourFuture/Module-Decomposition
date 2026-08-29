@@ -13,6 +13,14 @@ if (raw && !/^https?:\/\//.test(raw)) {
   process.exit(1);
 }
 
+// With no variable set, leave the committed config.js alone. It carries the
+// deployed backend URL, so a build that cannot see the variable still ships a
+// working site instead of silently blanking the address.
+if (!raw) {
+  console.log("No BACKEND_URL set — keeping the committed config.js");
+  process.exit(0);
+}
+
 const out = new URL("../chat-app/front-end/config.js", import.meta.url);
 
 writeFileSync(
@@ -21,4 +29,4 @@ writeFileSync(
     `window.BACKEND_URL = ${JSON.stringify(raw)};\n`
 );
 
-console.log(raw ? `BACKEND_URL set to ${raw}` : "BACKEND_URL empty (local/same-origin mode)");
+console.log(`BACKEND_URL set to ${raw}`);
