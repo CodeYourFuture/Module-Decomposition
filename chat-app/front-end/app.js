@@ -1,10 +1,9 @@
 // Default name used for the first chats. Change this if you want a different one.
 const DEFAULT_USERNAME = "Anonymous";
 
-// REQUIRED FOR DEPLOYMENT: set this to your deployed backend URL,
-// e.g. "https://my-chat-backend.onrender.com".
-// Leave it empty ONLY for local development, where the backend also serves this page.
-const BACKEND_URL = "";
+// Set by config.js, which Netlify generates at build time from the BACKEND_URL
+// environment variable. Empty means same-origin, which is what local dev wants.
+const BACKEND_URL = (window.BACKEND_URL || "").replace(/\/+$/, "");
 
 const IS_LOCAL = ["localhost", "127.0.0.1", ""].includes(location.hostname);
 

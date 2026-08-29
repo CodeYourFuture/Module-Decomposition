@@ -9,6 +9,8 @@
          Socket.IO client comes from the CDN. Keep this version in step with
          the "socket.io" version in back-end/package.json. -->
     <script src="https://cdn.socket.io/4.8.3/socket.io.min.js" crossorigin="anonymous"></script>
+    <!-- Written at build time from the BACKEND_URL env var; see scripts/inject-backend-url.mjs -->
+    <script src="./config.js"></script>
     <script defer src="./app.js"></script>
   </head>
   <body>

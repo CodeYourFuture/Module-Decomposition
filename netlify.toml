@@ -4,9 +4,17 @@
 
 [build]
   publish = "chat-app/front-end"
+  # Set BACKEND_URL in Site configuration > Environment variables.
+  command = "node scripts/inject-backend-url.mjs"
 
-# app.js holds BACKEND_URL. Serving it uncached means editing that value and
-# redeploying takes effect immediately instead of after a cache expiry.
+# config.js carries the backend URL and is regenerated on every build, so it
+# must never be served stale. app.js is small and changes often enough that
+# skipping the cache costs nothing.
+[[headers]]
+  for = "/config.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
 [[headers]]
   for = "/app.js"
   [headers.values]
