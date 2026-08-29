@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // silent. Say so loudly instead of showing an empty chat that never works.
   if (!BACKEND_URL && !IS_LOCAL) {
     welcomeUser.textContent =
-      "⚠️ BACKEND_URL is not set in app.js — the chat cannot connect.";
+      "⚠️ BACKEND_URL is not set — add it to this site's environment " +
+      "variables in Netlify, then redeploy. The chat cannot connect until then.";
     form.hidden = true;
     return;
   }
