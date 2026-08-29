@@ -1,0 +1,26 @@
+{
+  "name": "chat-app",
+  "version": "1.0.0",
+  "description": "Real-time chat app built with Express and Socket.IO",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "chat",
+    "socket.io",
+    "express"
+  ],
+  "author": "June",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.5"
+  }
+}
