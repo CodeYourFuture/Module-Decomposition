@@ -1,0 +1,16 @@
+# Render hosts the BACKEND ONLY (the frontend is on Netlify, see netlify.toml).
+# Render supports WebSockets on all plans, including free.
+services:
+  - type: web
+    name: world-chat-backend
+    runtime: node
+    plan: free
+    rootDir: chat-app/back-end
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      # Set this in the Render dashboard to your Netlify URL once you have it,
+      # e.g. https://world-chat-june.netlify.app (no trailing slash).
+      - key: CORS_ORIGIN
+        sync: false

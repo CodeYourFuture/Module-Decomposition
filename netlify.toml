@@ -1,0 +1,13 @@
+# Netlify hosts the FRONTEND ONLY.
+# The Socket.IO backend needs a long-lived Node process and must be deployed
+# elsewhere (Render, Railway, Fly.io); Netlify has no WebSocket support.
+
+[build]
+  publish = "chat-app/front-end"
+
+# app.js holds BACKEND_URL. Serving it uncached means editing that value and
+# redeploying takes effect immediately instead of after a cache expiry.
+[[headers]]
+  for = "/app.js"
+  [headers.values]
+    Cache-Control = "no-cache"
