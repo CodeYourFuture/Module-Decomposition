@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chatapp">
+
+  <title>Chatting</title>
+
+</head>
+
+<body>
+
+  <header>
+    <h2>Let's Chat</h2>
+  </header>
+
+  <main>
+    <section id="chatMessages"
+    style="border: 1px solid rgb(112, 92, 92); 
+    min-height: 200px;
+    padding:5px;
+    background-color:lightgray"
+    ></section>
+    <br>
+
+    <form id ="messageForm">
+        <label for="name">Name : </label>
+        <input type="text" id="name" placeholder="Your Name...." required> <br>
+        <br>
+        <label for="message">Message : </label>
+        <textarea id="message" placeholder="Type your message..." required></textarea>
+        <br>
+        <br>
+        <button type="submit" style ="width:30%;">Send</button>
+    </form>
+
+  </main>
+
+  <footer>
+    <p>&copy; AYK ChatApp @CodeYourFuture</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
