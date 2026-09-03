@@ -25,14 +25,14 @@ let formatting = {
 
 // Reply state
 let replyTo = null;
-// In-memory message cache (client-side)
+// message cache 
 const messageCache = new Map();
 
 // WebSocket opened
 socket.addEventListener("open", () => {
   connectionStatus.textContent = "🟢 Connected";
 });
-// Receive data
+// Receive messages
 socket.addEventListener("message", (event) => {
   try {
     const data = JSON.parse(event.data);
@@ -47,49 +47,31 @@ socket.addEventListener("message", (event) => {
         addMessage(message);
       });
     }
+
     // New message
     else if (data.type === "message") {
       messageCache.set(data.message.id, data.message);
       addMessage(data.message);
     }
+
     // Updated message
     else if (data.type === "message-updated") {
       messageCache.set(data.message.id, data.message);
       updateMessage(data.message);
     }
-    // Scheduled
-    else if (data.type === "scheduled") {
-      alert(data.message);
-    }
-    // Error
-    else if (data.type === "error") {
-      alert(data.message);
-    }
+
   } catch (error) {
     console.error("Could not process server message:", error);
   }
 });
 
+
 // Add message
 function addMessage(message) {
   const div = document.createElement("div");
+
   div.classList.add("message");
   div.dataset.messageId = message.id;
-
-  // Reply information
-  if (message.replyTo) {
-    const originalMessage = messageCache.get(message.replyTo);
-    const replyBox = document.createElement("div");
-    replyBox.classList.add("reply-reference");
-
-    if (originalMessage) {
-      replyBox.textContent = `↩ Replying to ${originalMessage.username}: ${originalMessage.text}`;
-    } else {
-      replyBox.textContent = "↩ Replying to another message";
-    }
-
-    div.appendChild(replyBox);
-  }
 
   // Username
   const username = document.createElement("strong");
@@ -105,9 +87,11 @@ function addMessage(message) {
   if (message.formatting?.bold) {
     text.style.fontWeight = "bold";
   }
+
   if (message.formatting?.italic) {
     text.style.fontStyle = "italic";
   }
+
   if (message.formatting?.underline) {
     text.style.textDecoration = "underline";
   }
@@ -118,7 +102,9 @@ function addMessage(message) {
 
   // Like button
   const likeButton = document.createElement("button");
+  likeButton.classList.add("like-button");
   likeButton.textContent = `👍 ${message.likes ?? 0}`;
+
   likeButton.addEventListener("click", () => {
     socket.send(
       JSON.stringify({
@@ -126,11 +112,15 @@ function addMessage(message) {
         messageId: message.id
       })
     );
+
+    console.log("Liked message:", message.id);
   });
 
-  // Dislike button
+  // Dislike buton
   const dislikeButton = document.createElement("button");
+  dislikeButton.classList.add("dislike-button");
   dislikeButton.textContent = `👎 ${message.dislikes ?? 0}`;
+
   dislikeButton.addEventListener("click", () => {
     socket.send(
       JSON.stringify({
@@ -138,41 +128,50 @@ function addMessage(message) {
         messageId: message.id
       })
     );
+
+    console.log("Disliked message:", message.id);
   });
 
-  // Reply button
+
   const replyButton = document.createElement("button");
   replyButton.textContent = "↩ Reply";
+
   replyButton.addEventListener("click", () => {
     startReply(message);
   });
 
-  // Put buttons together
   reactions.appendChild(likeButton);
   reactions.appendChild(dislikeButton);
   reactions.appendChild(replyButton);
 
-  // Build message
   div.appendChild(username);
   div.appendChild(text);
   div.appendChild(reactions);
 
   messagesContainer.appendChild(div);
 
-  // Scroll to newest message
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-// Update message
 function updateMessage(message) {
   const existing = document.querySelector(
     `[data-message-id="${message.id}"]`
   );
+
   if (!existing) {
     return;
   }
-  existing.remove();
-  addMessage(message);
+
+  const likeButton = existing.querySelector(".like-button");
+  const dislikeButton = existing.querySelector(".dislike-button");
+
+  if (likeButton) {
+    likeButton.textContent = `👍 ${message.likes ?? 0}`;
+  }
+
+  if (dislikeButton) {
+    dislikeButton.textContent = `👎 ${message.dislikes ?? 0}`;
+  }
 }
 
 // Start reply
