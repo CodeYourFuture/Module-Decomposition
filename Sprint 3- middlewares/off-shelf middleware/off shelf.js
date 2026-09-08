@@ -30,21 +30,16 @@ app.post("/", (req, res) => {
         return res.status(400).send("Invalid request body.");
     }
 
-    if (req.username) {
-        res.send(
-            `You are authenticated as ${req.username}.\n\n` +
-            `You have requested information about ${subjects.length} ` +
-            `${subjects.length === 1 ? "subject" : "subjects"}` +
-            `${subjects.length > 0 ? ": " + subjects.join(", ") : ""}.`
-        );
-    } else {
-        res.send(
-            `You are not authenticated.\n\n` +
-            `You have requested information about ${subjects.length} ` +
-            `${subjects.length === 1 ? "subject" : "subjects"}` +
-            `${subjects.length > 0 ? ": " + subjects.join(", ") : ""}.`
-        );
-    }
+    const authenticationMessage = req.username
+    ? `You are authenticated as ${req.username}.`
+    : "You are not authenticated.";
+
+    res.send(
+        authenticationMessage + "\n\n" +
+        `You have requested information about ${subjects.length} ` +
+        `${subjects.length === 1 ? "subject" : "subjects"}` +
+        `${subjects.length > 0 ? ": " + subjects.join(", ") : ""}.`
+    );
 });
 
 app.listen(PORT, () => {
