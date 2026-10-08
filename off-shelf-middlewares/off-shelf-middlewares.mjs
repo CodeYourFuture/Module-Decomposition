@@ -4,19 +4,23 @@ const checkUsername = (req, res, next) => {
   req.username = req.get("X-Username") ?? null;
   next();
 };
-app.use(checkUsername);
-app.use(express.json());
-
-app.post("/", (req, res) => {
+const validateBody = (req,res,next)=>{
   if (!Array.isArray(req.body)) {
-    res.status(400).send("Expected body to be an array.");
-    return;
+    return res.status(400).send("Expected body to be an array.");
   }
   const allString = req.body.every((item) => typeof item === "string");
   if (!allString) {
-    res.status(400).send("Expected all array elements to be strings.");
-    return;
+   return res.status(400).send("Expected all array elements to be strings.");
+  
   }
+  next();
+}
+app.use(checkUsername);
+app.use(express.json());
+app.use(validateBody);
+
+app.post("/", (req, res) => {
+ 
   let response = "";
   if (req.username) {
     response += `You are authenticated as ${req.username}.`;
