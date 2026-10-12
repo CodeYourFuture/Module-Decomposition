@@ -15,6 +15,20 @@ function usernameMiddleware(req, res, next) {
 }
 
 app.use(express.json());
+
+function bodyValidationMiddleware(req, res, next) {
+  if (!Array.isArray(req.body)) {
+    return res.status(400).send("Request body must be a JSON array.");
+  }
+
+  if (!req.body.every((item) => typeof item === "string")) {
+    return res.status(400).send("Array must contain only strings.");
+  }
+
+  next();
+}
+
+app.use(bodyValidationMiddleware);
 app.use(usernameMiddleware);
 
 app.post("/", (req, res) => {
