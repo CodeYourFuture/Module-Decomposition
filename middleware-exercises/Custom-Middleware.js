@@ -49,22 +49,16 @@ app.use(bodyMiddleware);
 
 app.post("/", (req, res) => {
   const subjects = req.body;
+  const authenticationMessage = req.username
+    ? `You are authenticated as ${req.username}.`
+    : "You are not authenticated.";
 
-  if (req.username) {
-    res.send(
-      `You are authenticated as ${req.username}.\n\n` +
-        `You have requested information about ${subjects.length} ` +
-        `${subjects.length === 1 ? "subject" : "subjects"}` +
-        `${subjects.length > 0 ? ": " + subjects.join(", ") : ""}.`,
-    );
-  } else {
-    res.send(
-      `You are not authenticated.\n\n` +
-        `You have requested information about ${subjects.length} ` +
-        `${subjects.length === 1 ? "subject" : "subjects"}` +
-        `${subjects.length > 0 ? ": " + subjects.join(", ") : ""}.`,
-    );
-  }
+  res.send(
+    `${authenticationMessage}\n\n` +
+      `You have requested information about ${subjects.length} ` +
+      `${subjects.length === 1 ? "subject" : "subjects"}` +
+      `${subjects.length > 0 ? ": " + subjects.join(", ") : ""}.`,
+  );
 });
 
 app.listen(PORT, () => {
