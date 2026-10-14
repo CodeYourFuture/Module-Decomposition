@@ -54,7 +54,7 @@ app.post("/", (req, res) => {
 
     if (req.body) {
         responseStr = responseStr.concat(
-            `You have requested information about ${req.body.length} subjects: ${req.body.join(", ")}.\n`,
+            `You have requested information about ${req.body.length} subjects: ${req.body.join(", ")}\n`,
         );
     }
 

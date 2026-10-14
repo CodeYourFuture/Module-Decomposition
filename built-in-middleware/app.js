@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express from "express";
 
 const app = express();
 app.use(express.json());
@@ -7,7 +7,6 @@ app.use(express.urlencoded({ extended: true }));
 function usernameMiddleware(req, res, next) {
     const username = req.get("X-username");
     req.username = username;
-    console.log(username);
     next();
 }
 
@@ -22,9 +21,8 @@ app.post("/", (req, res) => {
     }
 
     if (req.body) {
-        console.log(req.body);
         responseStr = responseStr.concat(
-            `You have requested information about ${req.body.length} subjects: ${req.body.join(", ")}.\n`,
+            `You have requested information about ${req.body.length} subjects: ${req.body.join(", ")}\n`,
         );
     }
     res.send(responseStr);
