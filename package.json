@@ -1,0 +1,24 @@
+{
+    "name": "module-decomposition",
+    "version": "1.0.0",
+    "description": "Exercises to practice and solidify your understanding of the Decomposition module of the Software Development Course.",
+    "homepage": "https://github.com/RaihanSharif/Module-Decomposition#readme",
+    "bugs": {
+        "url": "https://github.com/RaihanSharif/Module-Decomposition/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/RaihanSharif/Module-Decomposition.git"
+    },
+    "license": "ISC",
+    "author": "",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "start:built-in": "node ./build-in-middleware/app.js",
+        "start:custom": "node ./custom-middleware/app.js"
+    },
+    "dependencies": {
+        "express": "^5.3.0"
+    }
+}
